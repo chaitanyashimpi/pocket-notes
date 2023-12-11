@@ -2,28 +2,18 @@ import React, { useEffect, useState } from "react";
 import styles from "./pocket.module.css";
 import NewGroup from "../NewNoteGroup/NewGroup";
 
-const Pocket = () => {
+const Pocket = (props) => {
 	const [noteGroups, setNoteGroups] = useState([]);
-    const [selectNote, setSelectNote] = useState("")
+	const [selectNote, setSelectNote] = useState("");
 
 	useEffect(() => {
-		const updateNoteGroups = () => {
-			const allGroups = JSON.parse(localStorage.getItem("pocketGroup")) || [];
-			setNoteGroups(allGroups);
-		};
-
-		updateNoteGroups();
-
-		window.addEventListener("storage", updateNoteGroups);
-
-		return () => {
-			window.removeEventListener("storage", updateNoteGroups);
-		};
-	}, [setNoteGroups]);
+		const allGroups = JSON.parse(localStorage.getItem("pocketGroup")) || [];
+		setNoteGroups(allGroups);
+	}, []);
 
 	const setNote = (name) => {
-		localStorage.setItem("setNote", name);
-        setSelectNote(name)
+		setSelectNote(name);
+		props.onSubmitApp(name);
 	};
 
 	return (
@@ -34,9 +24,8 @@ const Pocket = () => {
 					<div
 						className={styles.note}
 						style={{
-							backgroundColor: selectNote === group[1] || localStorage.getItem("setNote") === group[1]
-								? "rgba(0, 0, 0, 0.158)"
-								: "",
+							backgroundColor:
+								selectNote === group[1] ? "rgba(0, 0, 0, 0.158)" : "",
 						}}
 						key={index}
 						onClick={() => setNote(group[1])}
@@ -50,7 +39,7 @@ const Pocket = () => {
 						<div className={styles.noteName}>{group[1]}</div>
 					</div>
 				))}
-				<NewGroup />
+				<NewGroup newGroup={setNoteGroups}/>
 			</div>
 		</div>
 	);

@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import style from "./notebox.module.css";
 import Img from "../../images/notes.png";
 
-const NoteSection = (noteGroup) => {
+const NoteSection = ({ noteGroup, selected }) => {
 	const [myNote, setMyNote] = useState([]);
 	const [allNotes, setAllNotes] = useState([]);
 
 	useEffect(() => {
-		const groupName = localStorage.getItem("setNote");
-		const storedNotes = JSON.parse(localStorage.getItem(groupName)) || [];
-		setMyNote(Array.isArray(storedNotes) ? storedNotes : []);
-	}, []);
+		const storedNotes = JSON.parse(localStorage.getItem(selected)) || [];
+		setMyNote(storedNotes);
+	}, [selected]);
 
 	const submitNote = async (event) => {
 		event.preventDefault();
@@ -52,20 +51,19 @@ const NoteSection = (noteGroup) => {
 
 		const Note = [formattedDate, formattedTime, allNotes];
 
-		const groupName = localStorage.getItem("setNote");
+		// Setting Data
 
-		const existingGroups = JSON.parse(localStorage.getItem(groupName)) || [];
+		const existingGroups = JSON.parse(localStorage.getItem(selected)) || [];
 
 		if (existingGroups.length === 0) {
-			localStorage.setItem(groupName, JSON.stringify([Note]));
+			localStorage.setItem(selected, JSON.stringify([Note]));
 		} else {
-			localStorage.setItem(
-				groupName,
-				JSON.stringify([...existingGroups, Note])
-			);
+			localStorage.setItem(selected, JSON.stringify([...existingGroups, Note]));
 		}
 
-		setMyNote(localStorage.getItem(groupName));
+		// Parse the value from localStorage and set it as an array or an empty array if null
+		const updatedMyNote = JSON.parse(localStorage.getItem(selected)) || [];
+		setMyNote(updatedMyNote);
 
 		setAllNotes("");
 	};
@@ -73,13 +71,10 @@ const NoteSection = (noteGroup) => {
 	return (
 		<>
 			<div className={style.header} style={{ backgroundColor: "#001f8b" }}>
-				<div
-					className={style.logo}
-					style={{ backgroundColor: noteGroup.noteGroup[2] }}
-				>
-					{noteGroup.noteGroup[0]}
+				<div className={style.logo} style={{ backgroundColor: noteGroup[2] }}>
+					{noteGroup[0]}
 				</div>
-				<div className={style.name}>{noteGroup.noteGroup[1]}</div>
+				<div className={style.name}>{noteGroup[1]}</div>
 			</div>
 			<div className={style.allNotes}>
 				{[...myNote].reverse().map((note, index) => (
@@ -108,27 +103,28 @@ const NoteSection = (noteGroup) => {
 	);
 };
 
-const NoteBox = () => {
+const NoteBox = (props) => {
 	const [noteGroup, setNoteGroup] = useState(null);
+
+	const [selected, setSelected] = useState("");
 
 	useEffect(() => {
 		// Retrieve the value from localStorage
-		const setNoteValue = localStorage.getItem("setNote");
+		setSelected(props.selected);
 
-		if (setNoteValue) {
+		if (props.selected) {
 			// Parse the "pocketGroup" value from localStorage
 			const pocketGroups =
 				JSON.parse(localStorage.getItem("pocketGroup")) || [];
 
 			// Find the group with the matching name
 			const matchingGroup = pocketGroups.find(
-				(group) => group[1] === setNoteValue
+				(group) => group[1] === props.selected
 			);
-
 			// Set the found group in state
 			setNoteGroup(matchingGroup);
 		}
-	}, []);
+	}, [props.selected]);
 
 	return (
 		<div className={style.noteSection}>
@@ -142,7 +138,7 @@ const NoteBox = () => {
 					</p>
 				</>
 			) : (
-				<NoteSection noteGroup={noteGroup} />
+				<NoteSection noteGroup={noteGroup} selected={selected || ""} />
 			)}
 		</div>
 	);

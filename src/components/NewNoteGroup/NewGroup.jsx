@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./newgourp.module.css";
 
-const NewGroup = () => {
+const NewGroup = (props) => {
 	const colorOptions = [
 		{
 			id: 1,
@@ -74,6 +74,9 @@ const NewGroup = () => {
 						JSON.stringify([...existingGroups, newGroup])
 					);
 				}
+				const newNoteGroups =
+					JSON.parse(localStorage.getItem("pocketGroup")) || [];
+				props.newGroup(newNoteGroups);
 				setErrorMessage("");
 				setName("");
 				setGroup(false);
