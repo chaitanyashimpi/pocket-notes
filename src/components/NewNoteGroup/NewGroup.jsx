@@ -143,8 +143,7 @@ const NewGroup = (props) => {
 								className={styles.closeButton}
 								onClick={() => setGroup(false)}
 							>
-								{" "}
-								x
+								<i className="fas fa-times"></i>
 							</div>
 						</form>
 					</div>

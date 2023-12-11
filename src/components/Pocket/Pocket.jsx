@@ -20,6 +20,18 @@ const Pocket = (props) => {
 		<div className={styles.pocket}>
 			<h1>Pocket Notes</h1>
 			<div className={styles.notes}>
+				{noteGroups.length !== 0 ? (
+					""
+				) : (
+					<div className={styles.notGroup}>
+						<i className="fas fa-exclamation-triangle"></i>
+						<h2>Add new note group</h2>
+						<p>
+							No groups available. Click on the below plus button to add new
+							group.
+						</p>
+					</div>
+				)}
 				{noteGroups.map((group, index) => (
 					<div
 						className={styles.note}
@@ -39,7 +51,7 @@ const Pocket = (props) => {
 						<div className={styles.noteName}>{group[1]}</div>
 					</div>
 				))}
-				<NewGroup newGroup={setNoteGroups}/>
+				<NewGroup newGroup={setNoteGroups} />
 			</div>
 		</div>
 	);
