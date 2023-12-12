@@ -110,8 +110,8 @@
 }
 @media only screen and (width < 1100px) {
 	.newGroup {
-		max-width: 280px;
-        height: 250px;
+		max-width: 320px;
+        height: 230px;
 		padding: 30px 10px 10px 20px;
 	}
 	.newGroup h2 {
@@ -129,16 +129,17 @@
 		margin-right: 5px;
 	}
 	.inputColor input,.inputCircle {
-		width: 20px;
-        height: 20px;
+		width: 25px;
+        height: 25px;
 	}
     .inputCircle{
         margin-right: 5px;
-        font-size: 18px;
-        color: rgba(0, 0, 0, 0.589);
+        font-size: 16px;
+        color: rgba(0, 0, 0, 0.418);
     }
     .inputButton{
         padding: 8px 20px;
         font-size: 15px;
+		bottom: 10px;
     }
 }
