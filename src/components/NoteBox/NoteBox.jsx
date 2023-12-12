@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "./notebox.module.css";
 import Img from "../../images/notes.png";
 
-const NoteSection = ({ noteGroup, selected }) => {
+const NoteSection = ({ noteGroup, selected, setGoBacks }) => {
 	const [myNote, setMyNote] = useState([]);
 	const [allNotes, setAllNotes] = useState([]);
 
@@ -67,10 +67,14 @@ const NoteSection = ({ noteGroup, selected }) => {
 
 		setAllNotes("");
 	};
+	const handleGoBack = () => {
+		setGoBacks(true)
+	}
 
 	return (
 		<>
 			<div className={style.header} style={{ backgroundColor: "#001f8b" }}>
+				<i className="fas fa-arrow-left" id={style.back} onClick={() => handleGoBack()}></i>
 				<div className={style.logo} style={{ backgroundColor: noteGroup[2] }}>
 					{noteGroup[0]}
 				</div>
@@ -89,6 +93,7 @@ const NoteSection = ({ noteGroup, selected }) => {
 
 			<form onSubmit={submitNote} className={style.addNote}>
 				<textarea
+				required
 					name="note"
 					id="note"
 					onChange={(event) => {
@@ -138,7 +143,7 @@ const NoteBox = (props) => {
 					</p>
 				</>
 			) : (
-				<NoteSection noteGroup={noteGroup} selected={selected || ""} />
+				<NoteSection noteGroup={noteGroup} selected={selected || ""} setGoBacks = {props.setBack}/>
 			)}
 		</div>
 	);

@@ -1,6 +1,6 @@
 .pocket {
 	background-color: #ffffff;
-	width: 350px;
+	min-width: 350px;
 	height: 100vh;
 	overflow: hidden;
 	display: flex;
@@ -8,6 +8,13 @@
 	align-items: center;
 	justify-content: center;
     position: relative;
+}
+#menuOpen{
+	position: absolute;
+	top: 15px;
+	right: 20px;
+	font-size: 25px;
+	display: none;
 }
 .pocket h1 {
 	height: 15vh;
@@ -89,4 +96,25 @@
 	border-radius: 4.5px;
     background-color: #ffffffe8;
     
+}
+
+
+@media only screen and (width < 1100px){
+	#menuOpen{
+		display: inherit;
+	}
+	.pocket{
+		position: fixed;
+		width: 100%;
+		z-index: 100;
+		
+	}
+	.mobilePocket{
+		position: fixed;
+		top: 0;
+		/* left: -350px; */
+		left: -100vw;
+
+	}
+	
 }

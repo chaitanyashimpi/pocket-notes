@@ -92,6 +92,7 @@ const NewGroup = (props) => {
 			>
 				+
 			</div>
+			
 			{group ? (
 				<div className={styles.newGroupSection}>
 					<div className={styles.newGroup}>
@@ -139,6 +140,7 @@ const NewGroup = (props) => {
 							<button type="submit" className={styles.inputButton}>
 								Create
 							</button>
+
 							<div
 								className={styles.closeButton}
 								onClick={() => setGroup(false)}
